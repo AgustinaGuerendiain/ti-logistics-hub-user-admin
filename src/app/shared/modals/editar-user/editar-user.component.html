@@ -1,0 +1,64 @@
+<div class="boton-derecho">
+    <button (click)="closeModal()" mat-raised-button color="primary">
+        <mat-icon matSuffix >close</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="registrar()" class="login">
+
+    <h1>Editar</h1>
+  
+    <mat-form-field appearance="fill" class="ancho">
+        <mat-label>Nombre completo</mat-label>
+        <input type="text" matInput required autocomplete="off" formControlName="fullName">
+        <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field> 
+
+    <mat-form-field appearance="fill" class="ancho">
+        <mat-label>Contraseña</mat-label>
+        <input [type]="hide ? 'password' : 'text'" matInput required autocomplete="off" formControlName="password" > 
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Tipo de usuario</mat-label>
+        <mat-select required autocomplete="off" formControlName="rol" #rol>
+          <mat-option *ngFor="let item of arrayRoles" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>face</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="ancho">
+        <mat-label>Direccion</mat-label>
+        <input type="text" matInput required autocomplete="off" formControlName="address">
+        <mat-icon matSuffix>place</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="ancho">
+        <mat-label>Telefono</mat-label>
+        <input type="text" matInput required autocomplete="off" formControlName="cellPhone">
+        <mat-icon matSuffix>phone</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="ancho">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput required autocomplete="off" formControlName="email">
+        <mat-icon matSuffix>email</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="ancho" *ngIf="rol.value.id == 2">
+        <mat-select  autocomplete="off" formControlName="vehicle" >
+            <mat-option *ngFor="let item of arrayVehiculos" [value]="item">
+                {{item.name}}
+            </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>drive_eta</mat-icon>
+    </mat-form-field>
+
+    <button  type="submit" mat-raised-button class="ancho" >Editar</button>
+
+</form> 
