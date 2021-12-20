@@ -6,10 +6,6 @@ import { HistorialViajesComponent } from './historial-viajes/historial-viajes.co
 import { ListasComponent } from './listas/listas.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentsModule } from '../components/components.module';
-
-
-
 
 @NgModule({
   declarations: [
@@ -24,7 +20,7 @@ import { ComponentsModule } from '../components/components.module';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    ComponentsModule
+    
   ]
 })
 export class PagesModule { }

@@ -4,7 +4,7 @@ import { Registro } from '../../models/registro';
 import { UsuariosService } from '../../service/usuarios/usuarios.service';
 import { Vehicle } from '../../models/vehiculo';
 import { Rol } from '../../models/rol';
-import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-registro',
@@ -72,6 +72,14 @@ export class RegistroComponent implements OnInit{
     this.registroService.postRegistro(this.usuarioRegistro).subscribe(resp => {
 
       console.log(resp)
+
+      Swal.fire(
+        'Usuario registrado!',
+        '',
+        'success'
+      )
+      
+      this.loginForm.reset();
 
     }, error => {
 

@@ -6,10 +6,6 @@ import { PagesModule } from './pages/pages.module';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { ComponentsModule } from './components/components.module';
-
-
-
 
 
 @NgModule({
@@ -23,7 +19,6 @@ import { ComponentsModule } from './components/components.module';
     PagesModule,
     MaterialModule,
     SharedModule,
-    ComponentsModule
   
   ],exports:[
    

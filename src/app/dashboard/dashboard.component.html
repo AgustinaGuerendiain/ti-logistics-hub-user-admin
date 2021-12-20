@@ -1,5 +1,57 @@
+<mat-toolbar class="mat-elevation-z8">
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">
+            menu
+        </mat-icon>
+        <mat-icon *ngIf="sidenav.opened">
+            close
+        </mat-icon>
+    </button>
+    <img src="../../../../assets/logo-blanco.png" width="150px" alt="">
+</mat-toolbar>
 
-<router-outlet ></router-outlet>  
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+
+        <img class="avatar mat-elevation-z8" src="../../assets/user.png" />
+
+        <h4 class="name">{{nombre}}</h4>
+        <p class="designation">Administrador</p>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button class="menu-button">
+            <mat-icon>how_to_reg</mat-icon>
+            <span><a [routerLink]="['/dashboard/registro']" routerLinkActive="router-link-active">Registro</a></span>
+        </button>
+        <button mat-button class="menu-button">
+            <mat-icon>time_to_leave</mat-icon>
+            <span><a [routerLink]="['/dashboard/viajes']" routerLinkActive="router-link-active">Viajes</a></span>
+        </button>
+        <button mat-button class="menu-button">
+            <mat-icon>manage_search</mat-icon>
+            <span><a [routerLink]="['/dashboard/historial-viajes']" routerLinkActive="router-link-active">Historial</a></span>
+        </button>
+        <button mat-button class="menu-button">
+            <mat-icon>format_list_bulleted</mat-icon>
+            <span><a [routerLink]="['/dashboard/listas']" routerLinkActive="router-link-active">Listas</a></span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button class="menu-button">
+            <mat-icon>logout</mat-icon>
+            <span><a (click)="cerrarSesion()">Cerrar sesión</a></span>
+        </button>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z8">
+            <router-outlet></router-outlet>  
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
 
     
  

@@ -12,6 +12,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   declarations: [],
@@ -31,7 +32,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatToolbarModule,
     MatMenuModule,
     MatPaginatorModule,
-    
+    MatDividerModule,
   ]
 })
 export class MaterialModule { }
