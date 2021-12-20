@@ -5,16 +5,17 @@ import { Registro } from '../../models/registro';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarUserComponent } from '../../../shared/modals/editar-user/editar-user.component';
 import { MatPaginator } from '@angular/material/paginator';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listas',
   templateUrl: './listas.component.html',
   styleUrls: ['./listas.component.scss']
 })
-export class ListasComponent {
+export class ListasComponent{
 
   constructor(private usuariosService : UsuariosService, private dialogo : MatDialog) { }
+
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -59,7 +60,11 @@ export class ListasComponent {
       this.dataSource.paginator = this.paginator;
       
     }, error => {
-      alert(error.error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
     })
 
   }
@@ -77,9 +82,13 @@ export class ListasComponent {
     element.isDeleted = true;
 
     this.usuariosService.postRegistro(element).subscribe(resp=>{
-      console.log(resp)
+
     }, error => {
-      alert(error.error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
     })
 
   }
@@ -89,9 +98,13 @@ export class ListasComponent {
     element.isDeleted = false;
 
     this.usuariosService.postRegistro(element).subscribe(resp=>{
-      console.log(resp)
+      
     }, error => {
-      alert(error.error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
     })
 
   }

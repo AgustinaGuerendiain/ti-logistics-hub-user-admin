@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Rol } from 'src/app/dashboard/models/rol';
 import { Vehicle } from 'src/app/dashboard/models/vehiculo';
 import { Registro } from '../../../dashboard/models/registro';
@@ -14,7 +15,7 @@ import { UsuariosService } from '../../../dashboard/service/usuarios/usuarios.se
 })
 export class EditarUserComponent implements OnInit {
 
-  constructor(public registroService : UsuariosService ,@Inject(MAT_DIALOG_DATA) public user: Registro, private dialogRef: MatDialogRef<EditarUserComponent>) { }
+  constructor(private _snackBar: MatSnackBar, public registroService : UsuariosService ,@Inject(MAT_DIALOG_DATA) public user: Registro, private dialogRef: MatDialogRef<EditarUserComponent>) { }
   
   hide = false;
 
@@ -28,14 +29,15 @@ export class EditarUserComponent implements OnInit {
   vehiculos: Vehicle = {};
   arrayVehiculos: Vehicle[] = [];
 
+  openSnackBar() {
+    this._snackBar.open("Usuario modificado con exito","Aceptar");
+  }
+
   ngOnInit(): void {
 
-    console.log(this.user)
-   
     this.registroService.getRoles().subscribe(resp=>{
       this.roles = resp;
       this.arrayRoles = Object.values(this.roles);
-      this.arrayRoles.shift();
     });
 
     this.registroService.getVehiculos().subscribe(resp=>{
@@ -50,7 +52,7 @@ export class EditarUserComponent implements OnInit {
     rol: new FormControl('', Validators.required),
     fullName: new FormControl(this.user.fullName, Validators.required),
     email: new FormControl(this.user.email, Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl(this.user.password, Validators.required),
     address: new FormControl(this.user.address, Validators.required),
     cellPhone: new FormControl(this.user.cellPhone, Validators.required),
     vehicle: new FormControl(null),
@@ -76,21 +78,18 @@ export class EditarUserComponent implements OnInit {
 
     this.usuarioRegistro = this.loginForm.value;
 
-    console.log(this.usuarioRegistro)
-
     this.registroService.postRegistro(this.usuarioRegistro).subscribe(resp => {
 
-      console.log(resp)
+      this.closeModal();
+      this.openSnackBar();
 
     }, error => {
 
       this.loginForm.reset();
-      console.log(error);
       alert(error)
 
     });
 
   }
-
 
 }

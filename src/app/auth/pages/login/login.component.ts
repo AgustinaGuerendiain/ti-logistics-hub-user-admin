@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario';
 import { LoginService } from '../../service/login.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent  {
     email : '',
     password: '',
     rol:{
-      id:''
+      id:0
     }
   }
   
@@ -37,22 +38,40 @@ export class LoginComponent  {
 
     this.loginService.login(this.usuario.email, this.usuario.password).subscribe( resp => {
       
-      localStorage.setItem('UsuarioIn', JSON.stringify(this.usuario.email));
-      localStorage.setItem('UsuarioId', JSON.stringify(resp.id));
-      localStorage.setItem('UsuarioName', JSON.stringify(resp.fullName));
-      localStorage.setItem('Rol', JSON.stringify(resp.rol.id));
+      if (resp.rol.id == 1) {
 
-      this.loginForm.reset();
+        localStorage.setItem('UsuarioIn', JSON.stringify(this.usuario.email));
+        localStorage.setItem('UsuarioId', JSON.stringify(resp.id));
+        localStorage.setItem('UsuarioName', JSON.stringify(resp.fullName));
+        localStorage.setItem('Rol', JSON.stringify(resp.rol.id));
 
-      this._router.navigateByUrl('dashboard/registro');
+        this.loginForm.reset();
+        
+        this._router.navigateByUrl('dashboard/registro');
+
+      }else{
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'El usuario no tiene acceso de administrador',
+        })
+
+        this.loginForm.reset();
+        
+        this._router.navigateByUrl('auth/login');
+      }
+      
       
     }, error => {
 
       this.loginForm.reset();
 
-      console.log(error);
-      
-      alert(error.error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
 
   });
 

@@ -1,0 +1,17 @@
+button{
+    background-color: #667eea;
+    color:white;
+    margin-left: 20px;
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 15px;
+}
+
+mat-option,mat-select{
+    font-family: 'Poppins', sans-serif;
+}

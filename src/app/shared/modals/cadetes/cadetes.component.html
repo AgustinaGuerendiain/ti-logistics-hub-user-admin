@@ -1,9 +1,15 @@
-<p>Seleccione un cadete de la lista para continuar</p>
 
-<mat-select placeholder="Cadetes" #id>
-    <mat-option *ngFor="let item of arrayCadetes" [value]="item.id">
-        {{item.fullName}}
-    </mat-option>
-</mat-select>
+    <h3>Seleccione un cadete de la lista para continuar</h3>
+<div class="contenedor">
+    <mat-form-field appearance="fill">
+        <mat-label>Cadetes</mat-label>
+        <mat-select placeholder="Cadetes" #id >
+            <mat-option *ngFor="let item of arrayCadetes" [value]="item.id">
+                {{item.fullName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+<button mat-raised-button (click)="postViaje(viaje, id.value)">Enviar</button>
+</div>
 
-<button (click)="postViaje(viaje, id.value)">Enviar</button>
+

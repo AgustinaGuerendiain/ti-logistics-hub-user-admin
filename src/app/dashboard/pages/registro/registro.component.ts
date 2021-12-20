@@ -67,11 +67,7 @@ export class RegistroComponent implements OnInit{
 
     this.usuarioRegistro = this.loginForm.value;
 
-    console.log(this.usuarioRegistro)
-
     this.registroService.postRegistro(this.usuarioRegistro).subscribe(resp => {
-
-      console.log(resp)
 
       Swal.fire(
         'Usuario registrado!',
@@ -84,8 +80,12 @@ export class RegistroComponent implements OnInit{
     }, error => {
 
       this.loginForm.reset();
-      console.log(error);
-      alert(error.error)
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
 
     });
 

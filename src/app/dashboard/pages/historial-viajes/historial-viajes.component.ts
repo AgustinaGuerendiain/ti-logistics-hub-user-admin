@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Viaje } from '../../models/viaje';
 import { ViajesService } from '../../service/viajes/viajes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-historial-viajes',
@@ -11,6 +13,8 @@ import { ViajesService } from '../../service/viajes/viajes.service';
 export class HistorialViajesComponent implements OnInit {
 
   constructor(private historialService : ViajesService) { }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<Viaje> (undefined);
 
@@ -30,8 +34,14 @@ export class HistorialViajesComponent implements OnInit {
   
       this.dataSource = new MatTableDataSource<Viaje>(this.infoTablaHistorial);
 
+      this.dataSource.paginator = this.paginator;
+
     }, error => {
-      alert(error.error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
     });
 
 

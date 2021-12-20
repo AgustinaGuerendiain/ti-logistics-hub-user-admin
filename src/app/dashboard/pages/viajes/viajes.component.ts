@@ -6,6 +6,8 @@ import { ViajesService } from '../../service/viajes/viajes.service';
 import { CadetesComponent } from 'src/app/shared/modals/cadetes/cadetes.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import Swal from 'sweetalert2'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-viajes',
@@ -14,7 +16,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ViajesComponent implements OnInit {
   
-  constructor(private viajesService : ViajesService,  private dialogo : MatDialog) { }
+  constructor(private _snackBar: MatSnackBar, private viajesService : ViajesService,  private dialogo : MatDialog) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -25,7 +27,7 @@ export class ViajesComponent implements OnInit {
   infoTablaHistorial: Viaje[] = [];
 
   ESTADOS = [
-    "1-Soliditud de retiro",
+    "1-Solicitud de retiro",
     "2-Retiro asignado",
     "3-Retirado",
     "4-Pendiente de reparación",
@@ -38,6 +40,11 @@ export class ViajesComponent implements OnInit {
   ];
   
   ngOnInit(): void {
+    this.getViajesActivos();
+  }
+
+  openSnackBar() {
+    this._snackBar.open("Viaje modificado con exito","Aceptar");
   }
 
   getViajesActivos(){
@@ -53,8 +60,6 @@ export class ViajesComponent implements OnInit {
     forkJoin([uno,dos,tres,cuatro,cinco,seis,siete,ocho]).subscribe(resp=>{
      
       this.infoTablaHistorial = [...resp[0],...resp[1],...resp[2],...resp[3],...resp[4],...resp[5],...resp[6],...resp[7]];
-      
-      console.log(this.infoTablaHistorial)
 
       this.dataSource = new MatTableDataSource<Viaje>(this.infoTablaHistorial);
 
@@ -71,8 +76,6 @@ export class ViajesComponent implements OnInit {
     forkJoin([uno,cinco]).subscribe(resp=>{
      
       this.infoTablaHistorial = [...resp[0],...resp[1]];
-      
-      console.log(this.infoTablaHistorial)
 
       this.dataSource = new MatTableDataSource<Viaje>(this.infoTablaHistorial);
 
@@ -92,8 +95,6 @@ export class ViajesComponent implements OnInit {
     forkJoin([dos,tres,seis,siete]).subscribe(resp=>{
      
       this.infoTablaHistorial = [...resp[0],...resp[1],...resp[2],...resp[3]];
-      
-      console.log(this.infoTablaHistorial)
 
       this.dataSource = new MatTableDataSource<Viaje>(this.infoTablaHistorial);
 
@@ -104,7 +105,7 @@ export class ViajesComponent implements OnInit {
 
   postViaje(element: Viaje){
 
-    if (element.lastStatusTravel == 2 || element.lastStatusTravel == 6){
+    if ((element.lastStatusTravel == 2) || (element.lastStatusTravel == 6 )){
 
       this.dialogo.open(CadetesComponent,{
         data: element
@@ -113,9 +114,16 @@ export class ViajesComponent implements OnInit {
     }else{
 
       this.viajesService.postViajeSinCadete(element).subscribe(resp=>{
-        console.log(resp)
+      this.openSnackBar();
+
       }, error => {
-        alert(error.error)
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error,
+        })
+
       })
       
     }

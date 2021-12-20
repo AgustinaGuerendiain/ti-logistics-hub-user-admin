@@ -1,16 +1,17 @@
 
+<mat-form-field appearance="fill" class="select">
+    <mat-label>Listas</mat-label>
+    <mat-select #rol>
+    <mat-option (click)="getUsuarios(3)" value="Lista Clientes" >Lista Clientes</mat-option>
+    <mat-option (click)="getUsuarios(2)" value="Lista Cadetes">Lista Cadetes</mat-option>
+    <mat-option (click)="getUsuarios(1)" value="Lista Administradores">Lista Administradores</mat-option>
+    <mat-option (click)="getUsuarios(0)" value="Lista Todos">Lista Todos</mat-option>
+    </mat-select>
+</mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Listas</mat-label>
-        <mat-select #rol>
-        <mat-option (click)="getUsuarios(3)" value="Lista Clientes" >Lista Clientes</mat-option>
-        <mat-option (click)="getUsuarios(2)" value="Lista Cadetes">Lista Cadetes</mat-option>
-        <mat-option (click)="getUsuarios(1)" value="Lista Administradores">Lista Administradores</mat-option>
-        <mat-option (click)="getUsuarios(0)" value="Lista Todos">Lista Todos</mat-option>
-        </mat-select>
-    </mat-form-field>
-
+<div class="contenedor">
     <table mat-table [dataSource]="dataSource" mat-elevation-z2 width="100%" >
+        
         <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef> Nombre </th>
         <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
@@ -38,7 +39,7 @@
 
         <ng-container matColumnDef="vehiculo">
             <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
-            <td mat-cell *matCellDef="let element"> {{element.vehicle?.name || '-'}}</td>
+            <td mat-cell *matCellDef="let element"> {{element.vehicle?.name || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="editar">
@@ -58,10 +59,11 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+    
     </table>
+</div>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+    <mat-paginator [pageSizeOptions]="[10, 20]"
     showFirstLastButtons 
     aria-label="Select page of dataSource">
     </mat-paginator> 

@@ -4,6 +4,8 @@ import { Registro } from 'src/app/dashboard/models/registro';
 import { UsuariosService } from 'src/app/dashboard/service/usuarios/usuarios.service';
 import { ViajesService } from 'src/app/dashboard/service/viajes/viajes.service';
 import { Viaje } from '../../../dashboard/models/viaje';
+import Swal from 'sweetalert2'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cadetes',
@@ -12,7 +14,7 @@ import { Viaje } from '../../../dashboard/models/viaje';
 })
 export class CadetesComponent implements OnInit {
 
-  constructor(public viajesService : ViajesService ,public usuariosService : UsuariosService ,@Inject(MAT_DIALOG_DATA) public viaje: Viaje, private dialogRef: MatDialogRef<CadetesComponent>) { }
+  constructor(private _snackBar: MatSnackBar, public viajesService : ViajesService ,public usuariosService : UsuariosService ,@Inject(MAT_DIALOG_DATA) public viaje: Viaje, private dialogRef: MatDialogRef<CadetesComponent>) { }
 
   arrayCadetes: Registro[] = [];
 
@@ -24,10 +26,24 @@ export class CadetesComponent implements OnInit {
     this.getCadetes();
   }
 
+  openSnackBar() {
+    this._snackBar.open("Viaje modificado con exito","Aceptar");
+  }
+
   postViaje(viaje : Viaje, cadete : number){
 
     this.viajesService.postViaje(viaje,cadete).subscribe(resp=>{
-      console.log(resp)
+      
+      this.closeModal();
+
+      this.openSnackBar();
+
+    },error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
       this.closeModal();
     })
 
@@ -46,6 +62,12 @@ export class CadetesComponent implements OnInit {
       return false
       })
 
+    },error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.error,
+      })
     })
 
   }
